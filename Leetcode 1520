@@ -1,0 +1,44 @@
+class Solution {
+    public List<String> maxNumOfSubstrings(String s) {
+        int n = s.length();
+        int[] first = new int[26];
+        int[] end = new int[26];
+        Arrays.fill(first,n);
+        Arrays.fill(end,-1);
+        for(int i=0;i<n;i++){
+            int ch = s.charAt(i)-'a';
+            first[ch] = Math.min(first[ch],i);
+            end[ch] = i;
+        }
+        List<int[]> interval = new ArrayList<>();
+
+        for(int i=0;i<26;i++){
+            if(end[i]==-1)continue;
+            
+            int st = first[i];
+            int e = end[i];
+            boolean valid = true;
+            for(int curr = st;curr<=e;curr++){
+                int ch = s.charAt(curr)-'a';
+                if(first[ch]<st){
+                    valid = false;
+                    break;
+                }
+                e = Math.max(e,end[ch]);
+            }
+            if(valid){
+                interval.add(new int[]{st,e});
+            }
+        }
+        interval.sort((a,b)->Integer.compare(a[1],b[1]));
+        List<String> ans = new ArrayList<>();
+        int prev = -1;
+        for(int[] curr:interval){
+            if(curr[0]>prev){
+                ans.add(s.substring(curr[0],curr[1]+1));
+                prev = curr[1];
+            }
+        }
+        return ans;
+    }
+}

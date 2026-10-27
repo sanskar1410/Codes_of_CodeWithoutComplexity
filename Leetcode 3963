@@ -1,0 +1,17 @@
+Java Solution
+Time Complexity - O(m x n)
+Space Complexity - O(m x n)
+**************************************************************************************************************************************************************
+class Solution {
+    public String[] createGrid(int m, int n) {
+        String a = ".".repeat(n);
+        String b = "#".repeat(n-1) + ".";
+        String[] result = new String[m];
+        result[0] = a;
+        for(int i=1;i<m;i++){
+            result[i] = b;
+        }
+        return result;
+    }
+}
+**************************************************************************************************************************************************************
